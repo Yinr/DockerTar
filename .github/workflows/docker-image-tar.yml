@@ -1,0 +1,30 @@
+name: Docker Image Tar
+
+on:
+  workflow_dispatch:
+    inputs:
+      image-name:
+        description: 'Docker Image'
+        required: true
+
+jobs:
+
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_IMAGE: ${{ github.event.inputs.image-name }}
+
+    steps:
+    - name: Build and Export Docker Image
+      run: |
+        docker pull ${DOCKER_IMAGE}
+        FILENAME=${DOCKER_IMAGE//[:\/]/_}.tar
+        docker save ${DOCKER_IMAGE} -o ${FILENAME}
+        echo "FILENAME=${FILENAME}" >> "$GITHUB_ENV"
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.FILENAME }}
+        path: ${{ env.FILENAME }}
