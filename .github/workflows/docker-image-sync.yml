@@ -21,7 +21,7 @@ jobs:
     environment: AliDocker
 
     env:
-      ORIGIN_REGISTRY: ${{ github.event.inputs.ORIGIN_REGISTRY }}
+      ORIGIN_REGISTRY: ${{ github.event.inputs.origin-registry }}
       REGISTRY: ${{ vars.REGISTRY }}
       REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
 
