@@ -3,6 +3,13 @@ name: Docker Image Sync
 on:
   workflow_dispatch:
     inputs:
+      origin-registry:
+        description: Original Registry
+        type: choice
+        options:
+          - docker.io
+          - ghcr.io
+        default: docker.io
       image-name:
         description: 'Docker Image'
         required: true
@@ -14,7 +21,7 @@ jobs:
     environment: AliDocker
 
     env:
-      ORIGIN_REGISTRY: docker.io
+      ORIGIN_REGISTRY: ${{ vars.ORIGIN_REGISTRY }}
       REGISTRY: ${{ vars.REGISTRY }}
       REGISTRY_REPO: ${{ vars.REGISTRY_REPO }}
 
